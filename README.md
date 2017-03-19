@@ -20,8 +20,8 @@ You should make sure that you have a tool on your system which can unpack a "tgz
 
 These are the materials we will work through during the meetup session:
 
-* Installation and setup
-* First steps with counting
+* [Installation and setup](Setup.md)
+* [First steps with the Spark shell](Counting.md)
 * Some commonly used Spark functions
 * Twitter data exercise
 

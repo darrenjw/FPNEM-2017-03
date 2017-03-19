@@ -4,19 +4,19 @@
 
 
 
-## Actions on an RDD[T]
+## Actions on an `RDD[T]`
 
 
 
-## Transformations of a PairRDD[(K,V)]
+## Transformations of a `PairRDD[(K,V)]`
 
 
 
-## Actions on a PairRDD[(K,V)]
+## Actions on a `PairRDD[(K,V)]`
 
 
 
-## DataFrames
+## `DataFrames`
 
 
 # API Docs

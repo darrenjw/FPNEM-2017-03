@@ -1,6 +1,6 @@
 # Commonly used Spark methods
 
-## Transformations of an RDD[T]
+## Transformations of an `RDD[T]`
 
 
 

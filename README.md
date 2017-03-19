@@ -23,7 +23,7 @@ These are the materials we will work through during the meetup session:
 * [Installation and setup](Setup.md)
 * [First steps with the Spark shell](Counting.md)
 * [Some commonly used Spark methods](Methods.md)
-* Twitter data exercise
+* [Twitter data exercise](Twitter.md)
 
 ### Useful links
 

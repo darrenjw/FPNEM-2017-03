@@ -8,6 +8,7 @@
 * map
 * persist
 * sample
+* sortBy
 * zip
 
 ## Actions on an `RDD[T]`
@@ -39,6 +40,7 @@
 * col
 * drop
 * select
+* show
 * withColumn
 
 # API Docs

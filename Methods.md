@@ -8,11 +8,11 @@
 
 
 
-## Transformations of a `PairRDD[(K,V)]`
+## Transformations of a Pair RDD, `RDD[(K,V)]`
 
 
 
-## Actions on a `PairRDD[(K,V)]`
+## Actions on a `RDD[(K,V)]`
 
 
 

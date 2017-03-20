@@ -53,12 +53,6 @@ rdd3.count
 rdd3.take(10)
 
 
-// 54.95 lat cuts below the Tyne?
-
-// Sunderland station: 54.905616, -1.382348 (lat,long)
-// Tweets within 5 miles?
-
-
 // eof
 
 

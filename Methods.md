@@ -1,5 +1,7 @@
 # Commonly used Spark methods
 
+Remember that **transformations** are *lazy* and **actions** are *strict*. An action must be called to trigger computation.
+
 ## Transformations of an `RDD[T]`
 
 * distinct

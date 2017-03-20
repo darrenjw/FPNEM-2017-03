@@ -12,61 +12,73 @@ Start by reading the data into a Spark DataFrame.
 
 ```scala
 val df1 = spark.read.
-	option("header","true").
-	option("inferSchema","true").
-	csv("UO-Twitter-1m.csv.gz").persist
+  option("header","true").
+  option("inferSchema","true").
+  csv("UO-Twitter-1m.csv.gz").persist
 
-df1.show(2)
+df1 show 2
 df1.count
 df1.schema
 df1.printSchema
 ```
-Note that the schema inference (requiring a second pass over the data) hasn't worked very well here. For this exercise we only care about the tweet text and the geo-location (if available). So let's pull those out.
+Note that the schema inference (requiring a second pass over the data) hasn't worked very well here. For this exercise we only care about the tweet text, geo-location (if available) and screen name. So let's pull those out.
 ```scala
-val df2 = df1.select("value","x5","y").persist
+val df2 = df1.select("value","x5","y","screen_name")
 df2.printSchema
-df2.show(5)
+df2 show 5 
 ```
 Next we can rename and re-type the columns, and filter out any tweets non geo-tagged.
 ```scala
 import org.apache.spark.sql.types._
 val df3 = df2.
-	withColumn("long",df2("x5").cast(DoubleType)).drop("x5").
-	withColumn("lat",df2("y").cast(DoubleType)).drop("y").
-	withColumnRenamed("value","tweet").
-	filter("long is! null").
-	filter("lat is! null")
+  withColumn("long",df2("x5").cast(DoubleType)).drop("x5").
+  withColumn("lat",df2("y").cast(DoubleType)).drop("y").
+  withColumnRenamed("value","tweet").
+  withColumnRenamed("screen_name","sname").
+  filter("long is! null").
+  filter("lat is! null")
 df3.printSchema
 df3.show(5)
 ```
 So far so good. Now we want to look at the hashtags within tweets. For this we need to split the text of the tweets into words. The now-deprecated `explode` method does this for us.
 ```scala
 val df4 = df3.
-	explode("tweet","word")((tweet: String) => tweet.split(" ")).
-	drop("tweet")
+  explode("tweet","word")((tweet: String) => tweet.split(" ")).
+  drop("tweet")
 df4.count
 df4.show(10)
 ```
 This works, but is deprecated, so this isn't very satisfactory. There's presumably a better way to do this now, but I haven't yet figured it out. However, for a `DataFrame` as simple as this, we could just convert back to an `RDD` and work with that instead.
 ```scala
+case class Tweet(tweet: String, sname: String,
+  long: Double, lat: Double)
+
 import org.apache.spark.sql.Row
-val rdd = df3.rdd.map{case Row(tweet: String,long: Double,lat: Double) => (tweet,long,lat)}
+
+val rdd = df3.rdd.map{
+  case Row(tweet: String, sname: String,
+    long: Double, lat: Double) =>
+    Tweet(tweet,sname,long,lat)
+  case Row(tweet: String, _, long: Double, lat: Double) =>
+    Tweet(tweet,"",long,lat)
+}
 rdd.count
-rdd.take(10)
+rdd take 10
 ```
-Now we have an `RDD[(String,Double,Double)]` we can just `flatMap`...
+Now we have an `RDD[Tweet]` we can just `flatMap`...
 ```scala
-val rdd2 = rdd.flatMap{tup => tup._1.split(" ").map(word => (word,tup._2,tup._3))}
+val rdd2 = rdd.flatMap{t => t.tweet.split(" ").
+  map(word => Tweet(word,t.sname,t.long,t.lat))}
 rdd2.count
 rdd2.take(10)
 ```
 This looks fine. So now let's just concentrate on the hashtags.
 ```scala
 val rdd3 = rdd2.
-	filter(_._1.length > 0).
-	filter(_._1(0) == '#').persist
+  filter(_.tweet.length > 0).
+  filter(_.tweet(0) == '#').persist
 rdd3.count
-rdd3.take(10)
+rdd3 take 10
 ```
 So there are 200k geotagged hashtag usages.
 

@@ -4,17 +4,16 @@ Remember that **transformations** are *lazy* and **actions** are *strict*. An ac
 
 ## Transformations of an `RDD[T]`
 
-* distinct
 ```scala
-distinct(): RDD[T]
+def distinct: RDD[T]
+def filter(f: (T) => Boolean): RDD[T]
+def flatMap[U](f: (T) => TraversableOnce[U]): RDD[U]
+def map[U](f: (T) => U): RDD[U]
+def persist: RDD[T]
+def sample(withReplacement: Boolean, fraction: Double): RDD[T]
+def sortBy[K](f: (T) ⇒ K, ascending: Boolean = true): RDD[T]
+def zip[U](other: RDD[U]): RDD[(T, U)]
 ```
-* filter
-* flatMap
-* map
-* persist
-* sample
-* sortBy
-* zip
 
 ## Actions on an `RDD[T]`
 

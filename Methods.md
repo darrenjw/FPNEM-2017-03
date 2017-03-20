@@ -5,6 +5,9 @@ Remember that **transformations** are *lazy* and **actions** are *strict*. An ac
 ## Transformations of an `RDD[T]`
 
 * distinct
+```scala
+distinct(): RDD[T]
+```
 * filter
 * flatMap
 * map

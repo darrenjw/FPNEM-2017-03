@@ -87,7 +87,7 @@ So there are 200k geotagged hashtag usages.
 1. What are the top 10 most popular hashtags?
 2. The latitude 54.95 cuts below the Tyne. How does hashtag popularity differ above and below this cutoff?
 3. Sunderland railway station has latitude 54.905616 and longitude -1.382348. What are the top 10 most popular hashtags within a 5 miles radius of this? You probably want to use the [Haversine formula](https://en.wikipedia.org/wiki/Haversine_formula) which you can grab in Scala from the end of [this blog post](https://davidkeen.com/blog/2013/10/calculating-distance-with-scalas-foldleft/).
-4. (probably for homework!) Form an RDD corresponding to the "mention graph" - that is, an `RDD[(String,String)]` consisting of pairs of users who have mentioned each other (by referencing with `@`) in tweets. How many edges are there in the mention graph? What if you remove duplicate edges? Which user has mentioned the most other distinct users? Which user has been mentioned the most distinct users?
+4. (probably for homework!) Form an RDD corresponding to the "mention graph" - that is, an `RDD[(String,String)]` consisting of pairs of users who have mentioned each other (by referencing with `@`) in tweets. How many edges are there in the mention graph? What if you remove duplicate edges? Which user has mentioned the most other distinct users? Which user has been mentioned by the most distinct users?
 
 
 

@@ -36,9 +36,10 @@ sc.textFile("README.md").
   flatMap(_.toCharArray).
   map{(_,1)}.
   reduceByKey(_+_).
+  sortBy(_._2,false).
   collect
 ```
-The first call to `map` converts upper case characters to lower case, as we don't want separate counts for upper and lower case characters. The call to `flatMap` then makes each element of the RDD correspond to a single character in the file. The second call to `map` transforms each element of the RDD to a key-value pair, where the key is the character and the value is the integer 1. RDDs have special methods for key-value pairs in this form - the method `reduceByKey` is one such - it applies the reduction operation (here just "+") to all values corresponding to a particular value of the key. Since each character has the value 1, the sum of the values will be a character count. Note that the reduction will be done in parallel, and for this to work it is vital that the reduction operation is associative. Simple addition of integers is clearly associative, so here we are fine. Note that `reduceByKey` is a (lazy) transformation, and so the computation needs to be triggered by a call to the action `collect`.
+The first call to `map` converts upper case characters to lower case, as we don't want separate counts for upper and lower case characters. The call to `flatMap` then makes each element of the RDD correspond to a single character in the file. The second call to `map` transforms each element of the RDD to a key-value pair, where the key is the character and the value is the integer 1. RDDs have special methods for key-value pairs in this form - the method `reduceByKey` is one such - it applies the reduction operation (here just "+") to all values corresponding to a particular value of the key. Since each character has the value 1, the sum of the values will be a character count. Note that the reduction will be done in parallel, and for this to work it is vital that the reduction operation is associative. Simple addition of integers is clearly associative, so here we are fine. Note that `reduceByKey` is a (lazy) transformation, as is `sortBy`, and so the computation needs to be triggered by a call to the action `collect`.
 
 On most Unix-like systems there is a file called `words` that is used for spell-checking. The example below applies the character count to this file. Note the calls to `filter`, which filter out any elements of the RDD not matching the predicate. Here it is used to filter out special characters.
 ```scala
@@ -50,6 +51,7 @@ sc.textFile("/usr/share/dict/words").
   filter(_ < '}').
   map{(_,1)}.
   reduceByKey(_+_).
+  sortBy(_._2,false).
   collect
 ```
 

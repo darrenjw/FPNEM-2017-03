@@ -48,7 +48,7 @@ rdd2.take(10)
 
 val rdd3 = rdd2.
 	filter(_._1.length > 0).
-	filter(_._1(0) == '#')
+	filter(_._1(0) == '#').persist
 rdd3.count
 rdd3.take(10)
 

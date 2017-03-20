@@ -64,7 +64,7 @@ This looks fine. So now let's just concentrate on the hashtags.
 ```scala
 val rdd3 = rdd2.
 	filter(_._1.length > 0).
-	filter(_._1(0) == '#')
+	filter(_._1(0) == '#').persist
 rdd3.count
 rdd3.take(10)
 ```

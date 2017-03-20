@@ -6,7 +6,7 @@
   * [March 2017](https://www.meetup.com/FP-North-East/events/237884620/) (this session)
 * [Slack channel](https://fp-north-east.slack.com/)
 
-### Advanced prep
+### Advance prep
 
 To follow along with the examples, you will need to bring a laptop with a recent version Java installed (do `java -version` to check).
 

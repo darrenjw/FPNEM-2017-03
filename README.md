@@ -18,6 +18,8 @@ You should make sure that you have a tool on your system which can unpack a "tgz
 
 ### Meetup session
 
+**Thanks to our sponsor [Opencast Software](http://opencastsoftware.com/) for the drinks and pizza!**
+
 These are the materials we will work through during the meetup session:
 
 * [Installation and setup](Setup.md)

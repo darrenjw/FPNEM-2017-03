@@ -86,7 +86,16 @@ So there are 200k geotagged hashtag usages.
 
 1. What are the top 10 most popular hashtags?
 2. The latitude 54.95 cuts below the Tyne. How does hashtag popularity differ above and below this cutoff?
-3. Sunderland railway station has latitude 54.905616 and longitude -1.382348. What are the top 10 most popular hashtags within a 5 miles radius of this? You probably want to use the [Haversine formula](https://en.wikipedia.org/wiki/Haversine_formula) which you can grab in Scala from the end of [this blog post](https://davidkeen.com/blog/2013/10/calculating-distance-with-scalas-foldleft/).
+3. Sunderland railway station has latitude 54.905616 and longitude -1.382348. What are the top 10 most popular hashtags within a 5 miles radius of this? You probably want to use the [Haversine formula](https://en.wikipedia.org/wiki/Haversine_formula) which you can grab in Scala from the end of [this blog post](https://davidkeen.com/blog/2013/10/calculating-distance-with-scalas-foldleft/):
+```scala
+def haversineDistance(pointA: (Double, Double), pointB: (Double, Double) = (54.905616,-1.382348)): Double = {
+  val deltaLat = math.toRadians(pointB._1 - pointA._1)
+  val deltaLong = math.toRadians(pointB._2 - pointA._2)
+  val a = math.pow(math.sin(deltaLat / 2), 2) + math.cos(math.toRadians(pointA._1)) * math.cos(math.toRadians(pointB._1)) * math.pow(math.sin(deltaLong / 2), 2)
+  val greatCircleDistance = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+  3958.761 * greatCircleDistance
+}
+```
 4. Form an RDD corresponding to the "mention graph" - that is, an `RDD[(String,String)]` consisting of pairs of user screen names who have mentioned each other (by referencing with `@`) in tweets. How many edges are there in the mention graph? What if you remove duplicate edges? Which user has mentioned the most other distinct users? Which user has been mentioned by the most distinct users?
 5. For those who love timestamps (and who doesn't?!), go back to the initial dataframe and cast the timestamp properly
 ```scala
@@ -97,7 +106,8 @@ val df5 = df1.withColumn("tstmp",df1("timestamp").cast(TimestampType)).
 to get a `java.util.Timestamp`, and then do some timestamp stuff... When was the first tweet in the dataset sent? The last? On what date were the most tweets sent, and how many tweets were sent on that day?
 
 
+
+
+
 #### eof
-
-
 

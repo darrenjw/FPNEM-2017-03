@@ -103,7 +103,7 @@ val df5 = df1.withColumn("tstmp",df1("timestamp").cast(TimestampType)).
   drop("timestamp").
   withColumnRenamed("tstmp","timestamp")
 ```
-to get a `java.util.Timestamp`, and then do some timestamp stuff... When was the first tweet in the dataset sent? The last? On what date were the most tweets sent, and how many tweets were sent on that day? What were the most popular hashtag that day? Do people tweet more on weekdays or weekends? How does tweeting vary with the hour of day?
+to get a `java.util.Timestamp`, and then do some timestamp stuff... When was the first tweet in the dataset sent? The last? On what date were the most tweets sent, and how many tweets were sent on that day? What were the most popular hashtags that day? Do people tweet more on weekdays or weekends? How does tweeting vary with the hour of day?
 
 #### eof
 
